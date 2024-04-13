@@ -1,0 +1,17 @@
+/*sizing of the map container*/
+.leaflet-container{
+    height: 100vh;
+}
+
+.cluster-icon{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-color: #138169;
+    transform: translate(-38%,-40%);
+    display:flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}

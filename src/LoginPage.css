@@ -1,0 +1,51 @@
+.login-card {
+    max-width: 100%;
+    border-radius: 30px; /* Curved edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Ensures the image also gets the rounded corners on the left side */
+  }
+  
+  /* Make the image cover the left half of the card and set a fixed height if needed */
+  .login-card .img-fluid {
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Style the form inputs and button with some spacing */
+  .form-group {
+    margin-bottom: 1.5rem; /* Spacing below each form group */
+  }
+  
+  .btn-primary {
+    background-color: black;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #565656;
+  }
+  
+  /* Style for titles and text */
+  .card-title {
+    font-size: 1.75rem; /* Larger text for the title */
+  }
+  
+  /* Padding around the card for all screen sizes to center it */
+  @media (min-width: 992px) { /* Adjusting for larger devices */
+    .login-card {
+      margin: 9vh auto; /* Centering the card with vertical padding */
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 991px) { /* For smaller devices, take up more horizontal space */
+    .login-card {
+      margin: 2vh auto; /* Less vertical padding on smaller screens */
+    }
+  
+    .login-card .img-fluid {
+      height: 60vh ; /* Adjust height on smaller screens */
+      width: 70vh;
+    }
+  }
+  
