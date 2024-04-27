@@ -13,9 +13,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Replace this URL with your actual API endpoint
-    const apiUrl = 'http://10.1.98.143:3000/api/tow/tows/getlocation';
+    const apiUrl = 'http://10.1.148.110:3000/api/tow/tows/getlocation';
     try {
-      const response = await axios.post(apiUrl, { vehicles });
+      const response = await axios.post(apiUrl, { vehicles }, {timeout: 10000});
       const data = response.data;
       console.log(data);
       if (data) {

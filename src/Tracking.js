@@ -58,7 +58,8 @@
 
 import React, { useEffect, useState } from 'react';
 import './Tracking.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import RoutingMachine from './RouteMachine';
+import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import { Icon, divIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -69,15 +70,13 @@ const Tracking = () => {
     // Initial state is an empty array
     const [markers, setMarkers] = useState([]);
     const location = useLocation();
-
+    
     const { data } = location.state 
 
     useEffect(() => {
         // Function to fetch geocode data
         const fetchGeocodeData = async () => {
             try {
-                // const response = await axios.get('http://192.168.29.90:3000/api/tow/tows/getlocation');
-                // const data = response.data;
                 // Assuming the API returns an array of objects with lat, lng, and popUp properties
                 // You can set a default popup message or get it from `data` if available
                 console.log("data", data);
@@ -86,8 +85,20 @@ const Tracking = () => {
                 if (data && data.location) {
                     setMarkers([{
                         geocode: [data.location.latitude, data.location.longitude],
-                        popUp: "Tow Truck" 
-                    }]);
+                        popUp: "Tow Truck", 
+                        icon: customIcon1
+                    },
+                    {
+                        geocode: [data.startLocation.lat, data.startLocation.long],
+                        popUp: "Start Location", 
+                        icon: customIcon2
+                    },
+                    {
+                        geocode: [data.endLocation.lat, data.endLocation.long],
+                        popUp: "End Location",
+                        icon: customIcon3
+                    }
+                ]);
                 }
             } catch (error) {
                 console.error("Failed to fetch geocode data", error);
@@ -97,8 +108,18 @@ const Tracking = () => {
         fetchGeocodeData();
     }, []); // Empty dependency array means this effect runs once on mount
 
-    const customIcon = new Icon({
+    const customIcon1 = new Icon({
         iconUrl: "https://cdn-icons-png.flaticon.com/256/709/709008.png", // Tow Truck icon
+        iconSize: [38, 38]
+    });
+
+    const customIcon2 = new Icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/44/44334.png", // Tow Truck icon
+        iconSize: [38, 38]
+    });
+
+    const customIcon3 = new Icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/929/929426.png", // Tow Truck icon
         iconSize: [38, 38]
     });
 
@@ -107,6 +128,11 @@ const Tracking = () => {
             html: `<div class='cluster-icon'>${cluster.getChildCount()}</div>`,
         });
     };
+
+    const routeCoordinates = [
+        [data.location.latitude, data.location.longitude],
+        [data.endLocation.lat, data.endLocation.long]
+    ];
 
     // Center of the map (You might want to dynamically set this based on fetched data)
     const mapCenter = markers.length > 0 ? markers[0].geocode : [data.location.latitude, data.location.longitude];
@@ -124,14 +150,15 @@ const Tracking = () => {
                             chunkedLoading
                             iconCreateFunction={createCustomClusterIcon}>
                             {markers.map((marker, index) => (
-                                <Marker key={index} position={marker.geocode} icon={customIcon}>
+                                <Marker key={index} position={marker.geocode} icon={marker.icon}>
                                     <Popup>{marker.popUp}</Popup>
                                 </Marker>
                             ))}
                         </MarkerClusterGroup>
+                        {/* <RoutingMachine /> */}
                     </MapContainer>
                 </div>
-                <div className="table-responsive">
+                {/* <div className="table-responsive">
                 <table className="table">
                     <thead>
                         <tr>
@@ -152,7 +179,7 @@ const Tracking = () => {
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div> */}
         </div>
     );
 }
