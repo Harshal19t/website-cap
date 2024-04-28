@@ -80,7 +80,7 @@ const Tracking = () => {
 
     fetchGeocodeData();
 
-    const intervalId = setInterval(fetchGeocodeData, 2000);
+    const intervalId = setInterval(fetchGeocodeData, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
